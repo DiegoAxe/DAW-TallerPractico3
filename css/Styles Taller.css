@@ -14,3 +14,11 @@ body{
 article{
     padding: 20px;
 }
+table{
+    width: 100%;
+}
+table,th,td{
+    border: 1px solid red;
+    border-collapse: collapse;
+    text-align: center;
+}

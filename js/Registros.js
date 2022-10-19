@@ -9,7 +9,13 @@ var Ano = document.getElementById("Ano");
 var Color = document.getElementById("Color");
 var Placa = document.getElementById("Placa");
 var Fallas = document.getElementById("Fallas");
+//Variables Extras
+var Fecha = document.getElementById("Fecha");
+var btnRegistro = document.getElementById("Registro");
+var Contador = 0;
 
+//Arrays
+var ArrayDatos = new Array(50);
 const ModelosToyota = ["FJ Cruiser","Land Cruiser Prado","Pixis Joy"];
 const ModelosHonda = ["Passport","Civic Sedán","Odyssey"];
 const ModelosNissan = ["Rogue Sport","Pathfinder","Frontier"];
@@ -57,6 +63,19 @@ Marca.onchange = CambioOpciones =>{
       
 }
 
+if (localStorage.getItem('ArrayDatos')) {
+    alert("si existe");
+    ArrayDatos = JSON.parse(ArrayDatos);
+    Contador = 0;
+    for(var i=0; i<ArrayDatos.length;i++){
+        var ObjTemporal = ArrayDatos[i];
+        alert(ObjTemporal);
+        document.getElementById('RegistrosDetallados').insertRow(-1).innerHTML = "<td>"+(i+1)+"</td><td>"+ObjTemporal.Fecha+"</td>"+
+            "<td>"+ ObjTemporal.Nombre+"</td><td>"+ObjTemporal.DUI+"</td><td>"+ObjTemporal.NIT+"</td><td>"+ObjTemporal.Marca+"</td><td>"+ObjTemporal.Modelo+"</td>"+
+            "<td>"+ObjTemporal.Ano+"</td><td>"+ObjTemporal.Color+"</td><td>"+ObjTemporal.Placa+"</td><td>"+ObjTemporal.Fallas+"</td>";
+    }
+}
+
 //Creacion del Objeto donde se guardaran los datos
 var Carro = { 
     //Informacion del Dueño
@@ -76,28 +95,92 @@ var Carro = {
     patronNit: /^\d{4}-\d{6}-\d{3}-\d{1}$/,
     patronPlaca: /^((M|MB|P|AU|N)\d{6})/,
 
+    validarDUI: function(datoDUI){
+        //Validaciond de números de DUI 
+        //Se debe de delimitar que sean 8 caracteres "Se agrega el ^" para que no cuente otro caracter al principio
+        //Luego con los D{Delimitamos los num} ya gregamos "-" por si se digita con el guión del Dui
+        //Para al final despues del guión hacer que lea un digito más
+        if (this.patronDui.test(datoDUI) == false){
+            alert("Por favor verifique la casilla DUI");
+            return false;
+        }else{
+            return true;
+        }  
+    },
+    validarNIT: function(datoNIT){
+        //Validacion del numero de NIT
+        //En el caso de la validacion del numero de nit es más de lo anterior
+        //Debemos validar que no exista un numero demás, y vamos delimitando la cantidad de digitos despues de un guión 
+        if(this.patronNit.test(datoNIT)==false){
+            alert("Por favor verifique la casilla NIT");
+            return false;
+        }else{
+            return true;
+        }
+    },
+    validarPlaca: function(datoPlaca){
+        //Validacion de placa de carro
+        //En el caso de la validacion de la placa de un carro debemos de delimitar el tipo de placa
+        //Por ejemplo puede ser la placa de una moto "M" o de un carro particular "P"
+        //Luego hacemos que valide que existen 6 numeros correspondientes a la placa luego de delimitar el tipo
+        if(this.patronPlaca.test(datoPlaca)==false){
+            alert("Por favor verifique la casilla Placa");
+            return false;
+        }else{
+            return true;
+        }
+    },
+
+    EscrituraEnTabla: function(Nom,D,N,Marc,Mode,An,Col,Plac,Fall,Fech){
+        this.Nombre = Nom;    this.DUI = D;          this.NIT = N;           this.Marca = Marc;      this.Modelo = Mode;    
+        this.Ano = An;        this.Color = Col;      this.Placa = Plac;      this.Fallas = Fall;     this.Fecha = Fech;
+
+        document.getElementById('RegistrosDetallados').insertRow(-1).innerHTML = "<td>"+(Contador+1)+"</td><td>"+this.Fecha+"</td>"+
+            "<td>"+ this.Nombre+"</td><td>"+this.DUI+"</td><td>"+this.NIT+"</td><td>"+this.Marca+"</td><td>"+this.Modelo+"</td>"+
+            "<td>"+this.Ano+"</td><td>"+this.Color+"</td><td>"+this.Placa+"</td><td>"+this.Fallas+"</td>";
+    }
 
 }
 
+btnRegistro.onclick = ProcesoRegistro =>{
+    //Validara que ningun dato este vacio
+    if(Nombre.value == "" || DUI.value == "" || NIT.value == "" || Ano.value == "" || 
+    Placa.value == "" || Fallas.value == "" || Fecha.value == ""){
+    alert("Error, un valor ha quedado como vacio");
+    } else{
+        //Aqui validara si se han escrito el DUI, NIT y Placa de acuerdo al patron
+        var validaDUI = Carro.validarDUI(DUI.value);
+        var validaNIT=Carro.validarNIT(NIT.value);
+        var validaPlaca=Carro.validarPlaca(Placa.value);
 
+        if(validaDUI == true && validaNIT== true && validaPlaca == true){
+            alert("Informacion escrita correctamente. Creando un registro.");
 
+            ArrayDatos[Contador] = Object.create(Carro);
+            ArrayDatos[Contador].EscrituraEnTabla(Nombre.value, DUI.value, NIT.value, Marca.value, Modelo.value, Ano.value, Color.value, Placa.value, Fallas.value, Fecha.value);
+            Contador++;
 
+            localStorage.setItem('ArrayDatos', JSON.stringify(ArrayDatos));
 
-//Validacion mediante Expresiones regulares
-//Validaciond de números de DUI 
-//Se debe de delimitar que sean 8 caracteres "Se agrega el ^" para que no cuente otro caracter al principio
-//Luego con los D{Delimitamos los num} ya gregamos "-" por si se digita con el guión del Dui
-//Para al final despues del guión hacer que lea un digito más
-var patronDui = /^\d{8}-\d$/;
-//------------alert(patronDui.test("06599445-0"));
-//En el caso de la validacion del numero de nit es más de lo anterior
-//Debemos validar que no exista un numero demás, y vamos delimitando la cantidad de digitos despues de un guión
+        }
+    }
 
-var patronNit = /^\d{4}-\d{6}-\d{3}-\d{1}$/;
-//-------------alert(patronNit.test("0614-061103-123-0"));
-//Validacion de placa de carro
-//En el caso de la validacion de la placa de un carro debemos de delimitar el tipo de placa
-//Por ejemplo puede ser la placa de una moto "M" o de un carro particular "P"
-//Luego hacemos que valide que existen 6 numeros correspondientes a la placa luego de delimitar el tipo
-var patronPlaca = /^((M|MB|P|AU|N)\d{6})/;
-//--------------alert(patronPlaca.test("581987"))
+}
+/*
+if(typeof (localStorage) === 'undefined'){
+    console.log('Tu navegador no soporta la funcion localStorage')
+}
+
+if (localStorage.getItem('ArrayDatos')) {
+    array = JSON.parse(ArrayDatos);
+    Contador = 0;
+    for(var i=0; i<ArrayDatos.length;i++){
+        document.getElementById('RegistrosDetallados').insertRow(-1).innerHTML = "<td>"+(Contador+1)+"</td><td>"+this.Fecha+"</td>"+
+            "<td>"+ this.Nombre+"</td><td>"+this.DUI+"</td><td>"+this.NIT+"</td><td>"+this.Marca+"</td><td>"+this.Modelo+"</td>"+
+            "<td>"+this.Ano+"</td><td>"+this.Color+"</td><td>"+this.Placa+"</td><td>"+this.Fallas+"</td>";
+    }
+
+} else {
+    localStorage.removeItem('ArrayDatos');
+}
+*/
