@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/Styles Taller.css" />
+    <title>Taller Practico 3 - DAW</title>
+</head>
+<body>
+    <header><h1>Taller el descansito</h1></header>
+    <section id="IngresoDatos"> 
+        <article id="DatosCliente">
+            <h2> Datos del Dueño: </h2>
+            <label for="Nombre"> Nombre Completo: </label>
+            <input type="text" id="Nombre">
+            <br>
+            <label for="DUI"> DUI: </label>
+            <input type="text" id="DUI" placeholder="Ejemplo 12345678-9">
+            <br>
+            <label for="NIT"> NIT: </label>
+            <input type="text" id="NIT" placeholder="Ejemplo 1234-456789-123-1">
+            <br><br><br>
+            <hr>
+        </article>
+        <article id="DatosCarro">
+            <h2> Datos del Carro: </h2>
+            <label for="Marca"> Marca: </label>
+            <select id="Marca">
+                <option value="Toyota" selected> Toyota</option>
+                <option value="Honda"> Honda </option>
+                <option value="Nissan"> Nissan </option>
+                <option value="Subaru"> Subaru </option>
+            </select>
+            <br>
+            <label for="Modelo"> Modelo: </label>
+            <select id="Modelo">
+                <!-- Opciones de Toyota -->
+                <option value="FJ Cruiser" selected> FJ Cruiser </option>
+                <option value="Land Cruiser Prado"> Land Cruiser Prado</option>
+                <option value="Pixis Joy"> Pixis Joy</option>
+            </select>
+            <br>
+            <label for="Ano"> Año: </label>
+            <input type="number" id="Ano" min="1990" max="2022" step="1">
+            <br>
+            <label for="Color"> Color: </label>
+            <select id="Color">
+                <option value="Rojo"  selected> Rojo </option>
+                <option value="Negro"> Negro </option>
+                <option value="Blanco"> Blanco </option>
+                <option value="Azul"> Azul </option>
+                <option value="Gris"> Gris </option>
+                <option value="Marron"> Marrón </option>
+                <option value="Amarillo"> Amarillo </option>
+            </select>
+            <br>
+            <label for="Placa"> Placa: </label>
+            <input type="text" id="Placa" placeholder="Ejemplo: P234579">
+            <br>
+            <label for="Fallas"> Fallas que tiene el vehiculo: </label>
+            <textarea id="Fallas" >  </textarea>
+            <br><br>
+            <hr>
+            <br>
+            <label for="Fecha"> Fecha de Ingreso al Taller: </label>
+            <input type="date" id="Fecha">
+            <br>
+            <button type="button" id="Registro"> Registrar </button>
+            <button type="button" id="Reiniciar"> Borrar datos </button>
+        </article>
+    </section>
+    <section id="MuestraInfo">
+        <article id="Tabladatos">
+            <table id="RegistrosDetallados">
+                <!-- Tiene 11 columnas -->
+                <tr>
+                    <th>#</th> <th>Fecha que fue ingresado</th> <!-- Datos del Dueño -->   <th>Nombre del Dueño</th><th>DUI</th><th>NIT</th>
+                    <!-- Datos del Carro --> <th>Marca</th><th>Modelo</th> <th>Año</th> <th>Color</th> <th>Placa</th> <th>Fallas del Automovil</th>
+                </tr>
+            </table>
+        </article>
+    </section>
+</body>
+<script src="js/Registros.js"></script>
+</html>
