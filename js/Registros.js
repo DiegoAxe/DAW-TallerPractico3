@@ -12,10 +12,11 @@ var Fallas = document.getElementById("Fallas");
 //Variables Extras
 var Fecha = document.getElementById("Fecha");
 var btnRegistro = document.getElementById("Registro");
+var btnReiniciar = document.getElementById("Reiniciar");
 var Contador = 0;
 
 //Arrays
-var ArrayDatos = new Array(50);
+var ArrayDatos = new Array();
 const ModelosToyota = ["FJ Cruiser","Land Cruiser Prado","Pixis Joy"];
 const ModelosHonda = ["Passport","Civic Sedán","Odyssey"];
 const ModelosNissan = ["Rogue Sport","Pathfinder","Frontier"];
@@ -63,18 +64,6 @@ Marca.onchange = CambioOpciones =>{
       
 }
 
-if (localStorage.getItem('ArrayDatos')) {
-    alert("si existe");
-    ArrayDatos = JSON.parse(ArrayDatos);
-    Contador = 0;
-    for(var i=0; i<ArrayDatos.length;i++){
-        var ObjTemporal = ArrayDatos[i];
-        alert(ObjTemporal);
-        document.getElementById('RegistrosDetallados').insertRow(-1).innerHTML = "<td>"+(i+1)+"</td><td>"+ObjTemporal.Fecha+"</td>"+
-            "<td>"+ ObjTemporal.Nombre+"</td><td>"+ObjTemporal.DUI+"</td><td>"+ObjTemporal.NIT+"</td><td>"+ObjTemporal.Marca+"</td><td>"+ObjTemporal.Modelo+"</td>"+
-            "<td>"+ObjTemporal.Ano+"</td><td>"+ObjTemporal.Color+"</td><td>"+ObjTemporal.Placa+"</td><td>"+ObjTemporal.Fallas+"</td>";
-    }
-}
 
 //Creacion del Objeto donde se guardaran los datos
 var Carro = { 
@@ -150,7 +139,7 @@ btnRegistro.onclick = ProcesoRegistro =>{
     } else{
         //Aqui validara si se han escrito el DUI, NIT y Placa de acuerdo al patron
         var validaDUI = Carro.validarDUI(DUI.value);
-        var validaNIT=Carro.validarNIT(NIT.value);
+        var validaNIT = Carro.validarNIT(NIT.value);
         var validaPlaca=Carro.validarPlaca(Placa.value);
 
         if(validaDUI == true && validaNIT== true && validaPlaca == true){
@@ -164,23 +153,21 @@ btnRegistro.onclick = ProcesoRegistro =>{
 
         }
     }
-
-}
-/*
-if(typeof (localStorage) === 'undefined'){
-    console.log('Tu navegador no soporta la funcion localStorage')
 }
 
-if (localStorage.getItem('ArrayDatos')) {
-    array = JSON.parse(ArrayDatos);
-    Contador = 0;
-    for(var i=0; i<ArrayDatos.length;i++){
-        document.getElementById('RegistrosDetallados').insertRow(-1).innerHTML = "<td>"+(Contador+1)+"</td><td>"+this.Fecha+"</td>"+
-            "<td>"+ this.Nombre+"</td><td>"+this.DUI+"</td><td>"+this.NIT+"</td><td>"+this.Marca+"</td><td>"+this.Modelo+"</td>"+
-            "<td>"+this.Ano+"</td><td>"+this.Color+"</td><td>"+this.Placa+"</td><td>"+this.Fallas+"</td>";
-    }
-
-} else {
+btnReiniciar.onclick = BorrarDatos =>{
+    alert("XD");
     localStorage.removeItem('ArrayDatos');
 }
-*/
+
+
+if (localStorage.getItem('ArrayDatos')) {
+    ArrayDatos = JSON.parse(localStorage.getItem("ArrayDatos"));
+    Contador = ArrayDatos.length;
+    for(var i=0; i<ArrayDatos.length;i++){
+        var ObjTemporal = ArrayDatos[i];
+        document.getElementById('RegistrosDetallados').insertRow(-1).innerHTML = "<td>"+(i+1)+"</td><td>"+ObjTemporal.Fecha+"</td>"+
+            "<td>"+ ObjTemporal.Nombre+"</td><td>"+ObjTemporal.DUI+"</td><td>"+ObjTemporal.NIT+"</td><td>"+ObjTemporal.Marca+"</td><td>"+ObjTemporal.Modelo+"</td>"+
+            "<td>"+ObjTemporal.Ano+"</td><td>"+ObjTemporal.Color+"</td><td>"+ObjTemporal.Placa+"</td><td>"+ObjTemporal.Fallas+"</td>";
+    }
+}
