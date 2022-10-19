@@ -156,7 +156,7 @@ btnRegistro.onclick = ProcesoRegistro =>{
 }
 
 btnReiniciar.onclick = BorrarDatos =>{
-    alert("XD");
+    alert("Datos borrados correctamente");
     localStorage.removeItem('ArrayDatos');
 }
 

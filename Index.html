@@ -8,6 +8,7 @@
     <title>Taller Practico 3 - DAW</title>
 </head>
 <body>
+    <header><h1>Taller el descansito</h1></header>
     <section id="IngresoDatos"> 
         <article id="DatosCliente">
             <h2> Datos del Dueño: </h2>
@@ -15,14 +16,13 @@
             <input type="text" id="Nombre">
             <br>
             <label for="DUI"> DUI: </label>
-            <input type="text" id="DUI">
+            <input type="text" id="DUI" placeholder="Ejemplo 12345678-9">
             <br>
             <label for="NIT"> NIT: </label>
-            <input type="text" id="NIT">
-            <br>
+            <input type="text" id="NIT" placeholder="Ejemplo 1234-456789-123-1">
+            <br><br><br>
             <hr>
         </article>
-        <br>
         <article id="DatosCarro">
             <h2> Datos del Carro: </h2>
             <label for="Marca"> Marca: </label>
@@ -56,21 +56,20 @@
             </select>
             <br>
             <label for="Placa"> Placa: </label>
-            <input type="text" id="Placa">
+            <input type="text" id="Placa" placeholder="Ejemplo: P234579">
             <br>
             <label for="Fallas"> Fallas que tiene el vehiculo: </label>
             <textarea id="Fallas" >  </textarea>
-            <br>
+            <br><br>
             <hr>
             <br>
             <label for="Fecha"> Fecha de Ingreso al Taller: </label>
             <input type="date" id="Fecha">
             <br>
             <button type="button" id="Registro"> Registrar </button>
-            <button type="button" id="Reiniciar"> Reiniciar </button>
+            <button type="button" id="Reiniciar"> Borrar datos </button>
         </article>
     </section>
-    <br><br>
     <section id="MuestraInfo">
         <article id="Tabladatos">
             <table id="RegistrosDetallados">
